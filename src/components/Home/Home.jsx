@@ -1,6 +1,12 @@
 import "./Home.css";
+import { fetchHugginFace } from "../../api";
+import { useEffect } from "react";
 
 export function Home() {
+
+  useEffect(() => {
+    fetchHugginFace();
+  }, []);
   return (
     <div className="container">
       <div className="box-top">Mood Space</div>
