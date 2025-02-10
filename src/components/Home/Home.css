@@ -48,9 +48,7 @@
 }
 
 .content-rigth {
-    border: 3px solid purple;
+    padding: 10px;
     grid-column: 3;
     grid-row: 1;
-    text-align: center;
-    align-content: center;
 }

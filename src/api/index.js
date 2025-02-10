@@ -23,18 +23,29 @@ export const fetchCryptoNews = async (query = 'bitcoin') => {
   }
 };
 
-export const fetchCoinGecko = async (query = 'bitcoin') => {
+export const fetchCryptoInfo = async (query = 'bitcoin') => {
     try {
       const response = await fetch(`${COIN_GECKO_API_URL}/${query}/history/?date=${getDateOneYearAgo()}&localization=false`);
       const data = await response.json();
 
       return data;
     } catch (error) {
-      console.error('Error fetching crypto news:', error);
+      console.error('Error fetching crypto info:', error);
     }
 };
 
-export const fetchHugginFace = async () => {
+export const fetchCryptos = async () => {
+  try {
+    const response = await fetch(`${COIN_GECKO_API_URL}/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false`);
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching cryptos:', error);
+  }
+};
+
+export const fetchHugginFace = async (query) => {
     try {
         const response = await fetch(HUGGING_FACE_API, {
             method: 'POST',
@@ -42,13 +53,13 @@ export const fetchHugginFace = async () => {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${HUGGING_FACE_API_KEY}`,
             },
-            body: JSON.stringify({ inputs: "This product is fantastic! It works just as advertised and I couldn't be happier." }),
+            body: JSON.stringify({ inputs: query }),
           });
     
         const data = await response.json();
 
       return data;
     } catch (error) {
-      console.error('Error fetching crypto news:', error);
+      console.error('Error getting Hugging Face API Info:', error);
     }
 };
