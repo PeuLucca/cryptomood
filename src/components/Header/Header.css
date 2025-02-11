@@ -13,7 +13,7 @@ header {
     transition: 0.6s transform;
   }
   
-  h1:hover {
+  header h1:hover {
     transform: scale(1.1);
   }
   
