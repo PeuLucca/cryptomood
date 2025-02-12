@@ -14,7 +14,7 @@ const getDateOneYearAgo = () => {
 
 export const fetchCryptoNews = async (query = 'bitcoin') => {
   try {
-    const response = await fetch(`${NEWS_API_URL}?q=${query}&sortBy=relevancy&apiKey=${NEWS_API_KEY}`);
+    const response = await fetch(`${NEWS_API_URL}?q=${query}-crypto&sortBy=relevancy&language=en&apiKey=${NEWS_API_KEY}`);
     const data = await response.json();
 
     return data.articles;

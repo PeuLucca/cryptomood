@@ -1,0 +1,45 @@
+@keyframes fly {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.mood-space {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.555);
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.mood-space:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.mood-emoji {
+    font-size: 6rem;
+    cursor: default;
+    animation: fly 2s infinite ease-in-out;
+}
+
+.mood-text {
+    text-align: left;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding-left: 15px;
+}
+
+.mood-text p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
