@@ -7,7 +7,7 @@ import "./News.css";
 export default function News({ crypto, news }) {
   return (
     <div style={{ padding: "10px" }}>
-      <h3 style={{ textTransform: "capitalize" }}>News about {crypto}</h3>
+      <h3 style={{ textTransform: "capitalize", marginLeft: "10px" }}>News about {crypto}</h3>
       <div className="container-news">
         {news && news.length > 0 ? (
           news.slice(0, 2).map((item, index) => (

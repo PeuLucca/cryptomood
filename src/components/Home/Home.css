@@ -8,6 +8,8 @@
 }
 
 .box-top {
+    border: 3px solid rgb(59, 59, 59, 0.5);
+    border-radius: 20px 10px 10px 20px;
     grid-column: 1;
     grid-row: 1;
     text-align: center;
@@ -15,11 +17,15 @@
 }
 
 .box-bottom {
+    border: 3px solid rgb(59, 59, 59, 0.5);
+    border-radius: 20px 10px 10px 20px;
     grid-column: 1;
     grid-row: 2;
 }
 
 .box-rigth {
+    border: 3px solid rgb(59, 59, 59, 0.5);
+    border-radius: 10px 20px 20px 10px;
     grid-column: 2;
     grid-row: 1 / 3;
     text-align: center;

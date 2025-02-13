@@ -25,7 +25,9 @@ export const fetchCryptoNews = async (query = 'bitcoin') => {
 
 export const fetchCryptoInfo = async (query = 'bitcoin') => {
     try {
-      const response = await fetch(`${COIN_GECKO_API_URL}/${query}/history/?date=${getDateOneYearAgo()}&localization=false`);
+      // comparacao com outras moedas:
+      // const response = await fetch(`${COIN_GECKO_API_URL}/${query}/history/?date=${getDateOneYearAgo()}&localization=false`);
+      const response = await fetch(`${COIN_GECKO_API_URL}/${query}/market_chart?vs_currency=usd&days=365&interval=daily`);
       const data = await response.json();
 
       return data;

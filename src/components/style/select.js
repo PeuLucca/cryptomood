@@ -1,16 +1,17 @@
 export const customStyles = {
     control: (styles) => ({
       ...styles,
-      backgroundColor: "#1E1E1E",
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
       borderColor: "#444",
       color: "#fff",
       boxShadow: "none",
+      borderRadius: "10px",
       "&:hover": { borderColor: "#666" },
     }),
     menu: (styles) => ({
       ...styles,
-      backgroundColor: "#1E1E1E",
-      border: "1px solid #444",
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      border: "1px solid rgb(59, 59, 59, 0.5)",
     }),
     option: (styles, { isFocused, isSelected }) => ({
       ...styles,

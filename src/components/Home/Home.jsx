@@ -11,13 +11,14 @@ import { customStyles } from "../style/select";
 import "./Home.css";
 
 // API
-import { fetchCryptos, fetchCryptoNews } from "../../api";
+import { fetchCryptos, fetchCryptoNews, fetchCryptoInfo } from "../../api";
 import Chart from "../Chart/Chart";
 
 export function Home() {
   const [cryptoCoin, setCryptoCoin] = useState([]);
   const [cryptoNews, setCryptoNews] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState("bitcoin");
+  const [cryptoChartData, setCryptoChartData] = useState([]);
 
   const handleCryptoCoin = async () => {
     try {
@@ -47,13 +48,44 @@ export function Home() {
     }
   };
 
+  const handleFetchCryptoInfo = async () => {
+    try {
+      const data = await fetchCryptoInfo(selectedCoin);
+      const formatMonthlyData = (prices) => {
+        const monthlyData = {};
+      
+        prices.forEach(([timestamp, value]) => {
+          const date = new Date(timestamp);
+          const month = date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      
+          if (!monthlyData[month]) {
+            monthlyData[month] = { total: 0, count: 0 };
+          }
+      
+          monthlyData[month].total += value;
+          monthlyData[month].count += 1;
+        });
+      
+        return Object.entries(monthlyData).map(([month, { total, count }]) => ({
+          date: month,
+          mood: Math.round(total / count),
+        }));
+      };      
+      
+      setCryptoChartData(formatMonthlyData(data.prices));
+    }catch(e){
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    // handleCryptoCoin();
+    handleCryptoCoin();
   }, [])
 
   useEffect(() => {
     if (selectedCoin !== "") {
-      // handleCryptoNews(selectedCoin);
+      handleCryptoNews();
+      handleFetchCryptoInfo();
     }
   }, [selectedCoin])
   
@@ -68,7 +100,7 @@ export function Home() {
       <div className="box-rigth">
         <div className="content">
             <div className="content-left">
-              <Chart crypto={selectedCoin} />
+              <Chart crypto={selectedCoin} data={cryptoChartData} />
             </div>
             <div className="content-rigth">
               <Select
