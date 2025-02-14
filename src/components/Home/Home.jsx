@@ -24,7 +24,7 @@ export function Home() {
     try {
       const data = await fetchCryptos();
       const formattedOptions = data.map((coin) => ({
-          value: coin.name,
+          value: coin.id,
           label: (
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <img src={coin.image} alt={coin.name} width={20} height={20} />
@@ -84,7 +84,7 @@ export function Home() {
 
   useEffect(() => {
     if (selectedCoin !== "") {
-      handleCryptoNews();
+      // handleCryptoNews();
       handleFetchCryptoInfo();
     }
   }, [selectedCoin])

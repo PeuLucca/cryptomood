@@ -1,16 +1,8 @@
-const NEWS_API_KEY = '5f7e240b2485445d95ac987e278cfedc';
 const NEWS_API_URL = 'https://newsapi.org/v2/everything';
+const NEWS_API_KEY = '5f7e240b2485445d95ac987e278cfedc';
 const COIN_GECKO_API_URL = 'https://api.coingecko.com/api/v3/coins';
-const HUGGING_FACE_API = 'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english';
+const HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english';
 const HUGGING_FACE_API_KEY = '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';
-
-const getDateOneYearAgo = () => {
-    const today = new Date();
-    today.setFullYear(today.getFullYear() - 1);
-    today.setMonth(today.getMonth() + 1);
-
-    return today.toLocaleDateString('en-GB').replace(/\//g, '-');
-};
 
 export const fetchCryptoNews = async (query = 'bitcoin') => {
   try {
@@ -27,10 +19,18 @@ export const fetchCryptoInfo = async (query = 'bitcoin') => {
     try {
       // comparacao com outras moedas:
       // const response = await fetch(`${COIN_GECKO_API_URL}/${query}/history/?date=${getDateOneYearAgo()}&localization=false`);
-      const response = await fetch(`${COIN_GECKO_API_URL}/${query}/market_chart?vs_currency=usd&days=365&interval=daily`);
-      const data = await response.json();
+      const coinsList = await fetch("https://api.coingecko.com/api/v3/coins/list")
+      .then(res => res.json());
+      const isValidCoin = coinsList.some(coin => coin.id === query);
+      if (isValidCoin) {
+        const response = await fetch(`${COIN_GECKO_API_URL}/${query.toLowerCase()}/market_chart?vs_currency=usd&days=365&interval=daily`);
+        const data = await response.json();
+        console.log(data);
 
-      return data;
+        return data;
+      } else {
+        return null;
+      }
     } catch (error) {
       console.error('Error fetching crypto info:', error);
     }
@@ -49,7 +49,7 @@ export const fetchCryptos = async () => {
 
 export const fetchHugginFace = async (query) => {
     try {
-        const response = await fetch(HUGGING_FACE_API, {
+        const response = await fetch(HUGGING_FACE_API_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const fetchHugginFace = async (query) => {
             },
             body: JSON.stringify({ inputs: query }),
           });
-    
+
         const data = await response.json();
 
       return data;
