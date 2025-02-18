@@ -11,7 +11,7 @@ import { customStyles } from "../style/select";
 import "./Home.css";
 
 // API
-import { fetchCryptos, fetchCryptoNews, fetchCryptoInfo } from "../../api";
+import { fetchCryptos, fetchCryptoNews, fetchCryptoInfo, analyzeCryptoSentiment } from "../../api";
 import Chart from "../Chart/Chart";
 
 export function Home() {
@@ -78,16 +78,31 @@ export function Home() {
     }
   };
 
+  const fetchAnalyzeCryptoSentiment = async () => {
+    try {
+      if (cryptoNews.length > 0) {
+        const response = await analyzeCryptoSentiment(selectedCoin, cryptoNews);
+        console.log(response);
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     handleCryptoCoin();
   }, [])
 
   useEffect(() => {
     if (selectedCoin !== "") {
-      // handleCryptoNews();
+      handleCryptoNews();
       handleFetchCryptoInfo();
     }
   }, [selectedCoin])
+
+  useEffect(() => {
+    fetchAnalyzeCryptoSentiment();
+  }, [cryptoNews])
   
   return (
     <div className="container">

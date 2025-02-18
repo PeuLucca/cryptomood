@@ -23,9 +23,8 @@ export const fetchCryptoInfo = async (query = 'bitcoin') => {
       .then(res => res.json());
       const isValidCoin = coinsList.some(coin => coin.id === query);
       if (isValidCoin) {
-        const response = await fetch(`${COIN_GECKO_API_URL}/${query.toLowerCase()}/market_chart?vs_currency=usd&days=365&interval=daily`);
+        const response = await fetch(`${COIN_GECKO_API_URL}/${query.toLowerCase()}/market_chart?vs_currency=usd&days=300&interval=daily`);
         const data = await response.json();
-        console.log(data);
 
         return data;
       } else {
@@ -64,4 +63,55 @@ export const fetchHugginFace = async (query) => {
     } catch (error) {
       console.error('Error getting Hugging Face API Info:', error);
     }
+};
+
+export const analyzeCryptoSentiment = async (crypto = 'bitcoin', news) => {
+  try {
+    if (!news || news.length === 0) {
+      console.warn('Nenhuma notícia encontrada para a moeda:', crypto);
+      return null;
+    }
+
+    // Mapeia todas as requisições para rodarem em paralelo
+    const sentimentPromises = news.map(async (article) => {
+      const text = `${article.title}. ${article.description}`;
+      return fetchHugginFace(text);
+    });
+
+    // Aguarda todas as requisições finalizarem
+    const sentimentResults = await Promise.all(sentimentPromises);
+
+    let positiveCount = 0;
+    let negativeCount = 0;
+    let total = 0;
+
+    sentimentResults.forEach((sentiment) => {
+      if (sentiment && sentiment[0]) {
+        const label = sentiment[0].label;
+        if (label === "POSITIVE") {
+          positiveCount++;
+        } else {
+          negativeCount++;
+        }
+        total++;
+      }
+    });
+
+    if (total === 0) {
+      console.warn('Nenhum dado de sentimento retornado.');
+      return null;
+    }
+
+    const positivePercentage = ((positiveCount / total) * 100);
+    const negativePercentage = ((negativeCount / total) * 100);
+
+    return {
+      crypto,
+      positivePercentage: positivePercentage,
+      negativePercentage: negativePercentage,
+      analyzedArticles: total,
+    };
+  } catch (error) {
+    console.error('Erro ao analisar sentimento:', error);
+  }
 };
