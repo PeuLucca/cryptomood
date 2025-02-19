@@ -1,7 +1,7 @@
 import React from "react";
 import "./MoodSpace.css";
 
-export default function MoodSpace({ percentage }) {
+export default function MoodSpace({ moodInfo }) {
     const getEmoji = (value) => {
         if (value >= 90) return "🔥🚀"; 
         if (value >= 75) return "🚀"; 
@@ -17,10 +17,10 @@ export default function MoodSpace({ percentage }) {
 
     return (
         <div className="mood-space">
-            <span className="mood-emoji">{getEmoji(percentage)}</span>
+            <span className="mood-emoji">{getEmoji(moodInfo.positiveCount || 0)}</span>
             <div className="mood-text">
-                <p>{percentage}% Positive</p>
-                <p>Market sentiment analysis</p>
+                <p>{moodInfo.positiveCount || 0}% Positive</p>
+                <p>Market sentiment analysis over {moodInfo.analyzedArticles || 0} articles</p>
             </div>
         </div>
     );

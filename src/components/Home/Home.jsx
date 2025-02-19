@@ -19,6 +19,7 @@ export function Home() {
   const [cryptoNews, setCryptoNews] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState("bitcoin");
   const [cryptoChartData, setCryptoChartData] = useState([]);
+  const [moodInfo, setMoodInfo] = useState({});
 
   const handleCryptoCoin = async () => {
     try {
@@ -82,7 +83,7 @@ export function Home() {
     try {
       if (cryptoNews.length > 0) {
         const response = await analyzeCryptoSentiment(selectedCoin, cryptoNews);
-        console.log(response);
+        setMoodInfo(response);
       }
     } catch(e) {
       console.log(e);
@@ -90,24 +91,24 @@ export function Home() {
   }
 
   useEffect(() => {
-    handleCryptoCoin();
+    // handleCryptoCoin();
   }, [])
 
   useEffect(() => {
     if (selectedCoin !== "") {
-      handleCryptoNews();
-      handleFetchCryptoInfo();
+      // handleCryptoNews();
+      // handleFetchCryptoInfo();
     }
   }, [selectedCoin])
 
   useEffect(() => {
-    fetchAnalyzeCryptoSentiment();
+    // fetchAnalyzeCryptoSentiment();
   }, [cryptoNews])
   
   return (
     <div className="container">
       <div className="box-top">
-        <MoodSpace percentage={54} />
+        <MoodSpace moodInfo={moodInfo} />
       </div>
       <div className="box-bottom">
         <News crypto={selectedCoin || "bitcoin"} news={cryptoNews} />

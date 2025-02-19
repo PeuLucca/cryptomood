@@ -6,7 +6,7 @@ const HUGGING_FACE_API_KEY = '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';
 
 export const fetchCryptoNews = async (query = 'bitcoin') => {
   try {
-    const response = await fetch(`${NEWS_API_URL}?q=${query}-crypto&sortBy=relevancy&language=en&apiKey=${NEWS_API_KEY}`);
+    const response = await fetch(`${NEWS_API_URL}?q=${query}-crypto&sortBy=relevancy&language=en&pageSize=15&apiKey=${NEWS_API_KEY}`);
     const data = await response.json();
 
     return data.articles;
@@ -72,27 +72,21 @@ export const analyzeCryptoSentiment = async (crypto = 'bitcoin', news) => {
       return null;
     }
 
-    // Mapeia todas as requisições para rodarem em paralelo
     const sentimentPromises = news.map(async (article) => {
       const text = `${article.title}. ${article.description}`;
       return fetchHugginFace(text);
     });
 
-    // Aguarda todas as requisições finalizarem
     const sentimentResults = await Promise.all(sentimentPromises);
 
     let positiveCount = 0;
-    let negativeCount = 0;
     let total = 0;
 
     sentimentResults.forEach((sentiment) => {
       if (sentiment && sentiment[0]) {
-        const label = sentiment[0].label;
-        if (label === "POSITIVE") {
-          positiveCount++;
-        } else {
-          negativeCount++;
-        }
+        const scorePositive = sentiment[0].score;
+
+        positiveCount += scorePositive;
         total++;
       }
     });
@@ -102,13 +96,8 @@ export const analyzeCryptoSentiment = async (crypto = 'bitcoin', news) => {
       return null;
     }
 
-    const positivePercentage = ((positiveCount / total) * 100);
-    const negativePercentage = ((negativeCount / total) * 100);
-
     return {
-      crypto,
-      positivePercentage: positivePercentage,
-      negativePercentage: negativePercentage,
+      positiveCount: (( positiveCount / total ) * 100),
       analyzedArticles: total,
     };
   } catch (error) {
