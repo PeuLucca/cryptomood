@@ -6,7 +6,7 @@ const HUGGING_FACE_API_KEY = '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';
 
 export const fetchCryptoNews = async (query = 'bitcoin') => {
   try {
-    const response = await fetch(`${NEWS_API_URL}?q=${query}-crypto&sortBy=relevancy&language=en&pageSize=15&apiKey=${NEWS_API_KEY}`);
+    const response = await fetch(`${NEWS_API_URL}?q=${query}-crypto&sortBy=relevancy&language=en&pageSize=18&apiKey=${NEWS_API_KEY}`);
     const data = await response.json();
 
     return data.articles;
@@ -84,7 +84,7 @@ export const analyzeCryptoSentiment = async (crypto = 'bitcoin', news) => {
 
     sentimentResults.forEach((sentiment) => {
       if (sentiment && sentiment[0]) {
-        const scorePositive = sentiment[0].score;
+        const scorePositive = sentiment[0][0].score;
 
         positiveCount += scorePositive;
         total++;
