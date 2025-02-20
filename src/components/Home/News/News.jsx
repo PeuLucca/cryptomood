@@ -35,7 +35,14 @@ export default function News({ crypto, news }) {
         )}
         {
           news && news.length > 0 ? (
-            <h5 style={{ textAlign: "center", cursor: "pointer" }}>See more news...</h5>
+            <h5 style={{ textAlign: "center", cursor: "pointer" }}>
+              <a
+                href={"https://www.google.com/search?q={" + crypto + "}+crypto&tbm=nws"}
+                target="_blank"
+              >
+                See more news...
+              </a>
+            </h5>
           ) : null
         }
       </div>

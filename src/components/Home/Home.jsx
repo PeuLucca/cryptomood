@@ -14,7 +14,7 @@ import "./Home.css";
 import { fetchCryptos, fetchCryptoNews, fetchCryptoInfo, analyzeCryptoSentiment } from "../../api";
 import Chart from "../Chart/Chart";
 
-export function Home() {
+export default function Home() {
   const [cryptoCoin, setCryptoCoin] = useState([]);
   const [cryptoNews, setCryptoNews] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState("bitcoin");

@@ -97,7 +97,7 @@ export const analyzeCryptoSentiment = async (crypto = 'bitcoin', news) => {
     }
 
     return {
-      positiveCount: (( positiveCount / total ) * 100),
+      positiveCount: (( positiveCount / total ) * 100).toFixed(1),
       analyzedArticles: total,
     };
   } catch (error) {

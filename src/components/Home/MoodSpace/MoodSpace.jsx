@@ -19,7 +19,7 @@ export default function MoodSpace({ moodInfo }) {
         <div className="mood-space">
             <span className="mood-emoji">{getEmoji(moodInfo.positiveCount || 0)}</span>
             <div className="mood-text">
-                <p>{moodInfo.positiveCount.toFixed(1) || 0}% Positive</p>
+                <p>{moodInfo.positiveCount || 0}% Positive</p>
                 <p>Market sentiment analysis over</p>
                 <p style={{ textDecoration: "underline" }}>{moodInfo.analyzedArticles || 0} articles</p>
             </div>
