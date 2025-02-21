@@ -17,8 +17,6 @@ export const fetchCryptoNews = async (query = 'bitcoin') => {
 
 export const fetchCryptoInfo = async (query = 'bitcoin') => {
     try {
-      // comparacao com outras moedas:
-      // const response = await fetch(`${COIN_GECKO_API_URL}/${query}/history/?date=${getDateOneYearAgo()}&localization=false`);
       const coinsList = await fetch("https://api.coingecko.com/api/v3/coins/list")
       .then(res => res.json());
       const isValidCoin = coinsList.some(coin => coin.id === query);
@@ -33,6 +31,17 @@ export const fetchCryptoInfo = async (query = 'bitcoin') => {
     } catch (error) {
       console.error('Error fetching crypto info:', error);
     }
+};
+
+export const fetchCryptoComparison = async () => {
+  try {
+    const response = await fetch(`${COIN_GECKO_API_URL}/markets?vs_currency=usd`);
+    const data = await response.json();
+
+    return data;
+  } catch(e){
+    console.error(e);
+  }
 };
 
 export const fetchCryptos = async () => {
