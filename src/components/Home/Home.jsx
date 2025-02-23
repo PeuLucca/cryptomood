@@ -91,22 +91,22 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // handleCryptoCoin();
+    handleCryptoCoin();
   }, [])
 
   useEffect(() => {
     if (selectedCoin !== "") {
-      // handleCryptoNews();
-      // handleFetchCryptoInfo();
+      handleCryptoNews();
+      handleFetchCryptoInfo();
     }
   }, [selectedCoin])
 
   useEffect(() => {
-    // fetchAnalyzeCryptoSentiment();
+    fetchAnalyzeCryptoSentiment();
   }, [cryptoNews])
   
   return (
-    <div className="container">
+    <div id='home' className="container">
       <div className="box-top">
         <MoodSpace moodInfo={moodInfo} />
       </div>
