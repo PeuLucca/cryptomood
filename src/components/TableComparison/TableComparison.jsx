@@ -56,6 +56,7 @@ export default function TableComparison() {
 
     return (
         <div id='coins' style={{ margin: '2rem' }}>
+            <h3>COINS COMPARISON</h3>
             <TableContainer component={Paper} sx={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
                 {loading ? (
                     <Box display="flex" justifyContent="center" alignItems="center" height={200}>
