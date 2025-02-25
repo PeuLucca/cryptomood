@@ -5,6 +5,7 @@ import Select from "react-select";
 // Components
 import MoodSpace from "./MoodSpace/MoodSpace";
 import News from "./News/News";
+import Chart from "../Chart/Chart";
 
 // Style
 import { customStyles } from "../style/select";
@@ -12,7 +13,6 @@ import "./Home.css";
 
 // API
 import { fetchCryptos, fetchCryptoNews, fetchCryptoInfo, analyzeCryptoSentiment } from "../../api";
-import Chart from "../Chart/Chart";
 
 export default function Home() {
   const [cryptoCoin, setCryptoCoin] = useState([]);
